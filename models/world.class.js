@@ -99,7 +99,6 @@ addObjectsToMap(objects) {
    objects.forEach(o => {
       this.addToMap(o)
     })
-
 }
 
 addToMap(mo) {
@@ -124,5 +123,4 @@ flipImageBack(mo) {
   mo.x = mo.x * -1;
   this.ctx.restore();
 }
-
 }
