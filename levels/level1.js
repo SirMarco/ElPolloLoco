@@ -1,6 +1,6 @@
 const level1 = new Level(
   [
-    new Chicken(),
+    // new Chicken(),
     // new Chicken(),
     // new Chicken(),
     // new Endboss()
@@ -43,5 +43,10 @@ const level1 = new Level(
     new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719*4),
     new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719*4),
   ],
+  [
+    new Coins(320, 220),
+    new Coins(420, 300),
+    new Coins(680, 120),
+  ]
 )
 

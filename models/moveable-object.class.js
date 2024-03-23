@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
   acceleration = 2.5;
   energy = 100;
   lastHit = 0;
-  coins = 0;
+  coin = 0;
 
 
 applyGravity() {
@@ -74,4 +74,10 @@ jump() {
 }
 
 
+collectCoin() {
+  this.coin += 1;
+  if (this.coin > 2) {
+      this.coin = 3;
+  }
+}
 }

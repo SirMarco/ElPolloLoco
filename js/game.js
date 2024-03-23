@@ -1,6 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let gameSound = false;
+let gamePaused = false;
 
 
 function init() {
@@ -52,3 +54,10 @@ window.addEventListener("keyup", (e) =>{
     keyboard.D = false;
   }
 })
+
+function playAudio(url) {
+  if(!gameSound) {
+      let audio = new Audio(url);
+      audio.play();
+  }
+}

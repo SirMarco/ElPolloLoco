@@ -29,6 +29,7 @@ run(){
   setInterval(() => {
     this.checkCollisions();
     this.checkThrowObjects();
+    this.checkCollectCoins();
   }, 200);
 }
 
@@ -45,6 +46,19 @@ checkCollisions(){
       this.character.hit();
       this.statusBar.setPercentage(this.character.energy)
       console.log('Collision with character', this.character.energy);
+    }
+  });
+}
+
+checkCollectCoins() {
+  this.level.coins.forEach((coin, i) => {
+    if (this.character.isColliding(coin)) {
+      this.character.collectCoin();
+      this.statusBarCoin.collectCoins(this.character.coin);
+      this.level.coins.splice(i, 1);
+      if(!gamePaused) {
+          playAudio('audio/coin.mp3');
+      }
     }
   });
 }
@@ -66,6 +80,7 @@ draw() {
 
   this.addToMap(this.character);
   this.addToMap(this.level.clouds);
+  this.addObjectsToMap(this.level.coins);
   this.addObjectsToMap(this.level.enemies);
   this.addObjectsToMap(this.throwableObject);
   this.ctx.translate(-this.camera_x, 0);
