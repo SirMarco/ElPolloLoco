@@ -1,7 +1,7 @@
 class LittleChicken extends MovableObject {
   y =380
-  width =80
-  height=80
+  width =60
+  height=60
   speed;
   offsetY = 160;
   offsetX = 160;
