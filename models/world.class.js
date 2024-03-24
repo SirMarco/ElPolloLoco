@@ -30,6 +30,7 @@ run(){
     this.checkCollisions();
     this.checkThrowObjects();
     this.checkCollectCoins();
+    this.checkCollectBottles();
   }, 200);
 }
 
@@ -63,6 +64,19 @@ checkCollectCoins() {
   });
 }
 
+checkCollectBottles() {
+  this.level.bottles.forEach((bottle, i) => {
+    if (this.character.isColliding(bottle)) {
+      this.character.collectBottle();
+      this.statusBarBottle.collectBottles(this.character.bottle);
+      this.level.bottles.splice(i, 1);
+      if(!gamePaused) {
+          playAudio('audio/coin.mp3');
+      }
+    }
+  });
+}
+
 
 draw() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -81,6 +95,7 @@ draw() {
   this.addToMap(this.character);
   this.addToMap(this.level.clouds);
   this.addObjectsToMap(this.level.coins);
+  this.addObjectsToMap(this.level.bottles);
   this.addObjectsToMap(this.level.enemies);
   this.addObjectsToMap(this.throwableObject);
   this.ctx.translate(-this.camera_x, 0);

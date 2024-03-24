@@ -6,7 +6,9 @@ const level1 = new Level(
     // new Endboss()
   ],
 
-  new Cloud(),
+    
+    new Cloud(),
+
   [
     new BackgroundObject('img/5_background/layers/air.png', -719*2),
     new BackgroundObject('img/5_background/layers/3_third_layer/1.png', -719*2),
@@ -42,11 +44,18 @@ const level1 = new Level(
     new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719*4),
     new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719*4),
     new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719*4),
-  ],
+  ],  
+  
   [
     new Coins(320, 220),
     new Coins(420, 300),
     new Coins(680, 120),
-  ]
-)
+  ],
+  
+  [
+    new Bottles (700, 320, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+    new Bottles (300, 320, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+    new Bottles (400, 320, 'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+  ],
+  )
 

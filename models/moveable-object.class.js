@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
   energy = 100;
   lastHit = 0;
   coin = 0;
+  bottle = 0;
 
 
 applyGravity() {
@@ -73,11 +74,18 @@ jump() {
   this.speedY = 35;
 }
 
-
 collectCoin() {
   this.coin += 1;
   if (this.coin > 2) {
       this.coin = 3;
+  }
+}
+
+collectBottle() {
+  console.log('bottle');
+  this.bottle += 1;
+  if (this.bottle > 2) {
+      this.bottle = 3;
   }
 }
 }
