@@ -26,7 +26,7 @@ draw(ctx) {
 }
 
 drawBorder(ctx) {
-  if(this instanceof Character || this instanceof Chicken || this instanceof Coins || this instanceof Bottles){
+  if(this instanceof Character || this instanceof Chicken || this instanceof Coins || this instanceof Bottles || this instanceof LittleChicken){
     ctx.beginPath();
     ctx.lineWidth = '2';
     ctx.strokeStyle = "blue";
