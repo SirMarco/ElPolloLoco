@@ -12,6 +12,8 @@ class World {
   statusBarCoin = new StatusBarCoin();
   throwableObject = [];
 
+  enemies = this.level.enemies;
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -27,11 +29,12 @@ class World {
 
   run() {
     setInterval(() => {
+      this.checkCharacterCollidesEnemy();
       this.checkCollisions();
       this.checkThrowObjects();
       this.checkCollectCoins();
       this.checkCollectBottles();
-    }, 200);
+    }, 200); //200
   }
 
   checkThrowObjects() {
@@ -72,6 +75,66 @@ class World {
       }
     });
   }
+
+  checkCharacterCollidesEnemy() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.characterJumpsOnTop(enemy)) {
+        this.enemieGetsKilled(enemy);
+
+        console.log("jump on enemy" + enemy);
+      }
+      if (this.enemieCanHurtCharacter(enemy)) {
+        console.log("hurt");
+      }
+    });
+  }
+
+  characterJumpsOnTop(enemy) {
+    return !this.character.isHurt() && this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0;
+  }
+
+  enemieCanHurtCharacter(enemy) {
+    return this.character.isColliding(enemy) && !this.character.isHurt() && !this.character.isAboveGround();
+  }
+
+  enemieGetsKilled(enemy) {
+    let indexEnemy = this.level.enemies.indexOf(enemy);
+    this.level.enemies[indexEnemy].energy = 0;
+    this.removeEnemyAfterDelay(indexEnemy);
+    this.character.jump();
+    this.kill(enemy);
+  }
+
+  removeEnemyAfterDelay(indexEnemy) {
+    setTimeout(() => {
+      this.level.enemies.splice(indexEnemy, 1);
+    }, 700);
+  }
+
+  characterGetsHurt() {
+    if (this.shouldCharacterGetHurt()) {
+      this.character.hit();
+      this.statusBarHealth.setPercentage(this.character.energy);
+    }
+  }
+
+  kill(enemy) {
+    enemy.deadChicken();
+    setTimeout(() => {
+      console.log(this.enemies.splice(this.enemies.indexOf(enemy), 1));
+    }, 500);
+  }
+
+  // checkCollisionJumpOnChicken() {
+  //   this.level.enemies.forEach((enemy) => {
+  //     if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+  //       if (!enemy.chickenDead) {
+  //         this.character.jump();
+  //       }
+  //       enemy.chickenDead = true;
+  //     }
+  //   });
+  // }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

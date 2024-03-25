@@ -21,7 +21,7 @@ function toggleBackgroundMusic(element) {
     gameSound = false;
     element.innerHTML = "volume_off";
   } else {
-    backgroundMusic.volume = 0.1;
+    backgroundMusic.volume = 0;
     backgroundMusic.play();
     gameSound = true;
     element.innerHTML = "volume_up";
