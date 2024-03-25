@@ -57,9 +57,7 @@ class World {
         this.character.collectCoin();
         this.statusBarCoin.collectCoins(this.character.coin);
         this.level.coins.splice(i, 1);
-        if (!gamePaused) {
-          playAudio("audio/coin.mp3");
-        }
+        playAudio("audio/coin.mp3");
       }
     });
   }
@@ -70,9 +68,7 @@ class World {
         this.character.collectBottle();
         this.statusBarBottle.collectBottles(this.character.bottle);
         this.level.bottles.splice(i, 1);
-        if (!gamePaused) {
-          playAudio("audio/bottle.mp3");
-        }
+        playAudio("audio/bottle.mp3");
       }
     });
   }
