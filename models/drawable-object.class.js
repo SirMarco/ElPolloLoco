@@ -2,16 +2,16 @@ class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
-  x = 80;
-  y = 80;
-  width = 200;
-  height = 400;
-  offset = {
-    top: 25,
-    left: 25,
-    right: 25,
-    bottom: 25,
-  };
+  x = 120; //80
+  y = 250; //80
+  width = 150; //200
+  height = 100; //400
+  // offset = {
+  //   top: 25,
+  //   left: 25,
+  //   right: 25,
+  //   bottom: 25,
+  // };
 
   // new Image ist bereits von JS gebeben, muss nicht neu definiert werden
   loadImage(path) {

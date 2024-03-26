@@ -2,34 +2,38 @@ class MovableObject extends DrawableObject {
   speed = 0.15;
   otherDirection = false;
   speedY = 0;
-  acceleration = 2.5;
+  acceleration = 1;
   energy = 10000;
   lastHit = 0;
   coin = 0;
   bottle = 0;
-  offset = {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  };
+
+  offsetY = 50;
+  offsetX = 40;
+  // offset = {
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   bottom: 0,
+  // };
 
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
-        console.log(this.speedY);
+        // console.log(this.speedY);
       }
-    }, 1000 / 25);
+    }, 1000 / 60);
   }
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       // Throwable Object should always fall
-      return this.y <= 280;
+      // return this.y <= 280;
+      return true;
     } else {
-      return this.y < 170;
+      return this.y < 135;
     }
   }
 
@@ -38,8 +42,12 @@ class MovableObject extends DrawableObject {
   //   return this.x + this.width >= obj.x && this.x <= obj.x + obj.width && this.y + this.offsetY + this.height >= obj.y && this.y + this.offsetY <= obj.y + obj.height;
   // }
 
-  isColliding(obj) {
-    return this.x + this.width - this.offset.right > obj.x + obj.offset.left && this.y + this.height - this.offset.bottom > obj.y + obj.offset.top && this.x + this.offset.left < obj.x + obj.width - obj.offset.right && this.y + this.offset.top < obj.y + obj.height - obj.offset.bottom;
+  // isColliding(obj) {
+  //   return this.x + this.width - this.offset.right > obj.x + obj.offset.left && this.y + this.height - this.offset.bottom > obj.y + obj.offset.top && this.x + this.offset.left < obj.x + obj.width - obj.offset.right && this.y + this.offset.top < obj.y + obj.height - obj.offset.bottom;
+  // }
+
+  isColliding(mo) {
+    return this.x + this.width - this.offsetX >= mo.x && this.x <= mo.x + mo.width - this.offsetX && this.y + this.offsetY + this.height >= mo.y && this.y + this.offsetY + 130 <= mo.y + mo.height;
   }
 
   hit() {
@@ -55,6 +63,7 @@ class MovableObject extends DrawableObject {
     let timepassed = new Date().getTime() - this.lastHit; // differnce in ms
     timepassed = timepassed / 1000;
     return timepassed < 0.1;
+    // return timepassed < 0.1;
   }
 
   isDead() {
@@ -78,7 +87,7 @@ class MovableObject extends DrawableObject {
   }
 
   jump() {
-    this.speedY = 35;
+    this.speedY = 20;
   }
 
   collectCoin() {

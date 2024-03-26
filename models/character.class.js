@@ -1,15 +1,15 @@
 class Character extends MovableObject {
   world;
-  speed = 10;
+  speed = 6;
   width = 150;
-  height = 300;
-  y = 80;
-  offset = {
-    top: 120,
-    left: 40,
-    right: 30,
-    bottom: 0,
-  };
+  height = 300; //300
+  y = 132; //80
+  // offset = {
+  //   top: 120,
+  //   left: 40,
+  //   right: 30,
+  //   bottom: 0,
+  // };
   sleepTimer = 0;
   snoreAudio = new Audio("audio/snore.mp3");
   walking_sound = new Audio("audio/running.mp3");
@@ -118,9 +118,9 @@ class Character extends MovableObject {
     } else if (!this.isHurt() && !this.isDead() && !this.isAboveGround()) {
       // console.log(this.isAboveGround());
       this.playAnimation(this.IMAGE_WAIT);
-      if (currentTime - this.lastAnimate >= 2000) {
+      if (currentTime - this.lastAnimate >= 2500) {
         this.playAnimation(this.IMAGES_SLEEP);
-        //this.snoreAudio.play();
+        this.snoreAudio.play();
       }
     }
   }

@@ -3,7 +3,7 @@ class World {
   level = level1;
   background = new Image();
   ctx;
-  xOffset = 90;
+  // xOffset = 90;
   canvas;
   keyboard;
   camera_x = 0;
@@ -12,7 +12,9 @@ class World {
   statusBarCoin = new StatusBarCoin();
   throwableObject = [];
 
-  enemies = this.level.enemies;
+  characterNotVulnerable = false;
+
+  // enemies = this.level.enemies;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -29,11 +31,12 @@ class World {
 
   run() {
     setInterval(() => {
-      this.checkCharacterCollidesEnemy();
-      this.checkCollisions();
+      // this.checkCharacterCollidesEnemy();
+      // this.checkCollisions();
       this.checkThrowObjects();
       this.checkCollectCoins();
       this.checkCollectBottles();
+      this.checkEnemieCollision();
     }, 200); //200
   }
 
@@ -44,15 +47,36 @@ class World {
     }
   }
 
-  checkCollisions() {
-    this.level.enemies.forEach((enemey) => {
-      if (this.character.isColliding(enemey)) {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
-        console.log("Collision with character", this.character.energy);
+  checkEnemieCollision() {
+    this.level.enemies.forEach((enemy, index) => {
+      if (!enemy.isDead() && this.character.isColliding(enemy)) {
+        if (this.character.isAboveGround() && !this.character.isHurt()) {
+          this.character.jump();
+          enemy.hit();
+          // this.soundManager.playSound('chicken');
+          console.log("if");
+          setTimeout(() => {
+            this.level.enemies.splice(index, 1);
+          }, 500);
+        } else {
+          this.character.hit();
+          this.statusBar.setPercentage(this.character.energy);
+          console.log("else");
+          // this.soundManager.playSound('hurt');
+        }
       }
     });
   }
+
+  // checkCollisions() {
+  //   this.level.enemies.forEach((enemey) => {
+  //     if (this.character.isColliding(enemey)) {
+  //       this.character.hit();
+  //       this.statusBar.setPercentage(this.character.energy);
+  //       console.log("Collision with character", this.character.energy);
+  //     }
+  //   });
+  // }
 
   checkCollectCoins() {
     this.level.coins.forEach((coin, i) => {
@@ -74,55 +98,6 @@ class World {
         playAudio("audio/bottle.mp3");
       }
     });
-  }
-
-  checkCharacterCollidesEnemy() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.characterJumpsOnTop(enemy)) {
-        this.enemieGetsKilled(enemy);
-
-        console.log("jump on enemy" + enemy);
-      }
-      if (this.enemieCanHurtCharacter(enemy)) {
-        console.log("hurt");
-      }
-    });
-  }
-
-  characterJumpsOnTop(enemy) {
-    return !this.character.isHurt() && this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0;
-  }
-
-  enemieCanHurtCharacter(enemy) {
-    return this.character.isColliding(enemy) && !this.character.isHurt() && !this.character.isAboveGround();
-  }
-
-  enemieGetsKilled(enemy) {
-    let indexEnemy = this.level.enemies.indexOf(enemy);
-    this.level.enemies[indexEnemy].energy = 0;
-    this.removeEnemyAfterDelay(indexEnemy);
-    this.character.jump();
-    this.kill(enemy);
-  }
-
-  removeEnemyAfterDelay(indexEnemy) {
-    setTimeout(() => {
-      this.level.enemies.splice(indexEnemy, 1);
-    }, 700);
-  }
-
-  characterGetsHurt() {
-    if (this.shouldCharacterGetHurt()) {
-      this.character.hit();
-      this.statusBarHealth.setPercentage(this.character.energy);
-    }
-  }
-
-  kill(enemy) {
-    enemy.deadChicken();
-    setTimeout(() => {
-      console.log(this.enemies.splice(this.enemies.indexOf(enemy), 1));
-    }, 500);
   }
 
   // checkCollisionJumpOnChicken() {
